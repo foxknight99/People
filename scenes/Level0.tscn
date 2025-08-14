@@ -1,3 +1,10 @@
-[gd_scene format=3 uid="uid://dbr4ewycnajkc"]
+[gd_scene load_steps=2 format=3 uid="uid://dbr4ewycnajkc"]
+
+[ext_resource type="PackedScene" uid="uid://qyuomnqqcyds" path="res://scenes/player.tscn" id="1_k7nap"]
 
 [node name="Level0" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_k7nap")]
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+position_smoothing_enabled = true

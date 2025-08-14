@@ -12,7 +12,7 @@ config_version=5
 
 config/name="game Creators"
 run/main_scene="uid://dbr4ewycnajkc"
-config/features=PackedStringArray("4.4", "Mobile")
+config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [dotnet]
