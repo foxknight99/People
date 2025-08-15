@@ -3,9 +3,11 @@ using System;
 
 public partial class CharacterBody2d : CharacterBody2D
 {
-	public float Speed = 300.0f;
-	public float JumpVelocity = -400.0f;
-	public float Gravity = 980.0f; // adjust to match your project
+	[Export] public float Speed = 300.0f;
+	[Export] public float JumpVelocity = -400.0f; 
+	[Export] public float Gravity = 980.0f; // adjust to match your project
+	
+	float direction = 1;
 
 	private AnimatedSprite2D animatedSprite;
 
@@ -18,35 +20,37 @@ public partial class CharacterBody2d : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
+		Velocity = velocity;
 
 		// Apply gravity if not on the floor
 		if (!IsOnFloor())
 			velocity.Y += Gravity * (float)delta;
 
 		// Handle jump
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+		if (Input.IsKeyPressed(Key.X) && IsOnFloor())
 			velocity.Y = JumpVelocity;
 
-		// Get movement direction
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-
-		if (direction != Vector2.Zero)
+		if (Input.IsKeyPressed(Key.Up))
 		{
-			velocity.X = direction.X * Speed;
+			
+		}
+		if (Input.IsKeyPressed(Key.Down))
+		{
+			
+		}
+		if (Input.IsKeyPressed(Key.Left))
+		{
+			direction = -1;
+			Scale = new Vector2(direction, 0);
 			animatedSprite.Play("walk");
-
-			// Flip sprite
-			Vector2 scale = Scale;
-			scale.X = MathF.Sign(direction.X) * MathF.Abs(scale.X);
-			Scale = scale;
+			velocity.X = Speed * direction;
 		}
-		else
+		if (Input.IsKeyPressed(Key.Right))
 		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-			animatedSprite.Play("Idle");
+			direction = 1;
+			Scale = new Vector2(direction, 0);
+			animatedSprite.Play("walk");
+			velocity.X = Speed * direction;
 		}
-
-		Velocity = velocity;
-		MoveAndSlide();
 	}
 }
